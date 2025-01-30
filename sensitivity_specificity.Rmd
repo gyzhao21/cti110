@@ -1,0 +1,40 @@
+---
+title: "Sensitivity_specificity"
+author: "Frank Chao"
+date: "2025-01-30"
+output: html_document
+---
+
+## **Sensitivity Analysis**
+
+This plot visualizes the sensitivity and specificity data.
+
+```{r sensitivity-plot, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+
+# Combine data for both plots into a single data frame
+data_combined <- data.frame(
+  Category = c('No Pathology (Sensitivity)', 'CORTEX, TUBULE, NECROSIS (Sensitivity)', 
+               'Non-CORTEX, TUBULE, NECROSIS Pathology (Specificity)', 'CORTEX, TUBULE, NECROSIS (Specificity)'),
+  Count = c(54, 10, 139, 11),
+  Group = c('Sensitivity', 'Sensitivity', 'Specificity', 'Specificity')
+)
+
+# Create combined plot
+plot_combined <- ggplot(data_combined, aes(x = Category, y = Count, fill = Group)) +
+  geom_bar(stat = "identity", width = 0.5) +
+  geom_text(aes(label = Count), vjust = -0.5, size = 3.5) +
+  theme_minimal() +
+  labs(
+    x = "",
+    y = "Count"
+  ) +
+  scale_fill_manual(values = c("#87CEEB", "#2E8B57")) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.title = element_blank()
+  ) +
+  ylim(0, 150)
+
+# Explicitly print the plot
+print(plot_combined)
